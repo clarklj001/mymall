@@ -12,7 +12,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>de.killbuqs.mall</groupId>
-			<artifactId>mymall-commons</artifactId>
+			<artifactId>mymall-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

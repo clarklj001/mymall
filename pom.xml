@@ -8,12 +8,14 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>mymall-commons</module>
+		<module>mymall-common</module>
 		<module>mymall-product</module>
 		<module>mymall-coupon</module>
 		<module>mymall-member</module>
 		<module>mymall-order</module>
 		<module>mymall-ware</module>
+		<module>renren-fast</module>
+		<module>renren-generator</module>
 	</modules>
 
 	<properties>
@@ -23,9 +25,9 @@
 		<junit.version>4.12</junit.version>
 		<log4j.version>1.2.17</log4j.version>
 		<lombok.version>1.2.17</lombok.version>
-		<mysql.version>5.1.47</mysql.version>
+		<mysql.version>8.0.17</mysql.version>
 		<druid.version>1.1.16</druid.version>
-		<mybatis.spring.boot.version>2.1.4</mybatis.spring.boot.version>
+		<mybatis.plus.boot.version>3.2.0</mybatis.plus.boot.version>
 		<spring-cloud-alibaba.version>2.1.0.RELEASE</spring-cloud-alibaba.version>
 		<spring-cloud.version>Hoxton.SR1</spring-cloud.version>
 		<spring-boot.version>2.2.2.RELEASE</spring-boot.version>
@@ -65,18 +67,24 @@
 				<artifactId>druid</artifactId>
 				<version>${druid.version}</version>
 			</dependency>
+			<!-- <dependency> <groupId>org.mybatis.spring.boot</groupId> <artifactId>mybatis-spring-boot-starter</artifactId> 
+				<version>${mybatis.spring.boot.version}</version> </dependency> -->
 			<dependency>
-				<groupId>org.mybatis.spring.boot</groupId>
-				<artifactId>mybatis-spring-boot-starter</artifactId>
-				<version>${mybatis.spring.boot.version}</version>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-boot-starter</artifactId>
+				<version>${mybatis.plus.boot.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid-spring-boot-starter</artifactId>
 				<version>1.2.5</version>
 			</dependency>
-			<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-test</artifactId> 
-				<scope>test</scope> </dependency> -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<scope>test</scope>
+				<version>${spring-boot.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
