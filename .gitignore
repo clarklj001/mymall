@@ -41,6 +41,8 @@ mymall-product/
 common/mysql/data/
 common/renren-fast-vue/
 
+common/nacos/logs/
+common/nacos/data/derby-data/
 
 
 
