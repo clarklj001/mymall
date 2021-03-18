@@ -1,9 +1,12 @@
 package de.killbuqs.mall.coupon.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +27,23 @@ import de.killbuqs.common.utils.R;
  * @email jie.long@killbuqs.de
  * @date 2021-03-14 23:20:27
  */
+@RefreshScope
 @RestController
 @RequestMapping("coupon/coupon")
 public class CouponController {
     @Autowired
     private CouponService couponService;
+    
+    @Value("${server.port}")
+    private String serverPort;
+    
+    @RequestMapping("/member/list")
+    public R membercoupons() {
+    	CouponEntity couponEntity = new CouponEntity();
+    	couponEntity.setCouponName("满100减10");
+    	
+    	return R.ok().put("coupons", Arrays.asList(couponEntity));
+    }
 
     /**
      * 列表

@@ -3,6 +3,7 @@ package de.killbuqs.mall.member.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.killbuqs.mall.member.entity.MemberEntity;
+import de.killbuqs.mall.member.feign.CouponFeignService;
 import de.killbuqs.mall.member.service.MemberService;
 import de.killbuqs.common.utils.PageUtils;
 import de.killbuqs.common.utils.R;
@@ -29,6 +31,17 @@ import de.killbuqs.common.utils.R;
 public class MemberController {
     @Autowired
     private MemberService memberService;
+    
+    @Autowired
+    private CouponFeignService couponFeignService;
+    
+    @RequestMapping("/coupons")
+    public R test() {
+    	MemberEntity memberEntity = new MemberEntity();
+    	memberEntity.setNickname("张三");
+    	R membercoupons = couponFeignService.membercoupons();
+    	return R.ok().put("member", memberEntity).put("coupons", membercoupons.get("coupons"));
+    }
 
     /**
      * 列表
