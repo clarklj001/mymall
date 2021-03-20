@@ -39,7 +39,7 @@ mymall-product/
 .idea
 
 common/mysql/data/
-common/renren-fast-vue/
+# common/renren-fast-vue/
 
 common/nacos/
 
