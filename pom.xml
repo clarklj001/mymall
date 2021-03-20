@@ -14,6 +14,7 @@
 		<module>mymall-member</module>
 		<module>mymall-order</module>
 		<module>mymall-ware</module>
+		<module>mymall-gateway</module>
 		<module>renren-fast</module>
 		<module>renren-generator</module>
 	</modules>

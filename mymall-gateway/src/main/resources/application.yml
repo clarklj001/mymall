@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: mymall-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      routes:
+      - id: test
+        uri: https://www.google.de
+        predicates:
+        - Query=url, google
+      - id: test-qq
+        uri: http://www.qq.com
+        predicates:
+        - Query=url, qq
+          
+server:
+  port: 8888
+  
+  
