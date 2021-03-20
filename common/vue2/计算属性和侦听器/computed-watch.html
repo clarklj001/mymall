@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li>  西游记： 价格 {{price1}}, 数量 <input type="number" v-model="num1"></li>
+            <li>  水浒传： 价格 {{price2}}, 数量 <input type="number" v-model="num2"></li>
+            <li>  西游记： 总价 {{totalPrice}}</li>
+            {{msg}}
+        </ul>
+
+    </div>
+
+
+ 
+
+       
+    <script src="../node_modules/vue/dist/vue.js">    </script>
+    <script>
+
+        let vm = new Vue({
+            el: "#app",
+            data:{
+                price1: 65,
+                num1: 1,
+                price2: 84,
+                num2: 1,
+                msg: ""
+            },
+            computed: {
+                totalPrice() {
+                    return this.price1*this.num1 + this.price2*this.num2;
+                }
+            },
+            watch: {
+                num1(newVal, oldVal) {
+                    if(newVal >= 3) {
+                        this.msg = "库存超出限制";
+                        this.num1 = 3;
+                    } else {
+                        this.msg = "";
+                    }
+                }
+            }    
+        });
+
+        
+
+    </script>
+</body>
+</html>

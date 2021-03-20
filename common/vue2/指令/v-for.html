@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- v-bind 是单向绑定-->
+    <div id="app">
+        <ul>
+            <li v-for="(user, index) in users" :key="user.name" v-if="user.gender=='女'">
+                {{index}}:  {{user.name}} ==> {{user.gender}} ==> {{user.age}}  <br>
+
+                <span v-for="(val , key, index) in user"> 
+                   {{index}} {{key}}:{{val}}   ==>
+                </span>
+
+            </li>
+
+        </ul>
+
+        <ul>
+            <li v-for="(number, index) in numbers" :key="index">
+                {{number}},
+            </li>
+
+        </ul>
+
+    </div>
+
+
+<script src="../node_modules/vue/dist/vue.js">
+</script>
+
+<script>
+
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            users: [{name: '柳岩', gender:'女', age: 21},
+            {name: '张三', gender:'男', age: 18},
+            {name: '范冰冰', gender:'女', age: 23},
+            {name: '刘亦菲', gender:'女', age: 24},
+            {name: '鼓励哪吒', gender:'女', age: 26}
+            ],
+            numbers: [2,3,4,5,6,6]
+        }
+    })
+
+</script>
+
+</body>
+</html>

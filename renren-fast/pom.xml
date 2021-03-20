@@ -52,6 +52,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>de.killbuqs.mall</groupId>
+			<artifactId>mymall-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -307,7 +312,7 @@
 		</plugins>
 	</build>
 
-	<repositories>
+ 	<repositories>
 		<repository>
 			<id>public</id>
 			<name>aliyun nexus</name>
@@ -316,7 +321,7 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-	</repositories>
+	</repositories> 
 	<pluginRepositories>
 		<pluginRepository>
 			<id>public</id>
@@ -330,5 +335,4 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-
 </project>

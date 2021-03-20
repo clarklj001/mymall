@@ -11,10 +11,21 @@ spring:
         uri: https://www.google.de
         predicates:
         - Query=url, google
-      - id: test-qq
-        uri: http://www.qq.com
+        
+      - id: product_route
+        uri: lb://mymall-product
         predicates:
-        - Query=url, qq
+        - Path=/api/product/**
+        filters:
+        - RewritePath=/api/(?<segment>/?.*), /$\{segment}
+
+      - id: admin_route
+        uri: lb://renren-fast
+        predicates:
+        - Path=/api/**
+        filters:
+        - RewritePath=/api/(?<segment>/?.*), /renren-fast/$\{segment}
+
           
 server:
   port: 8888
