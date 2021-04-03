@@ -20,6 +20,7 @@
           </el-form-item>
           <el-form-item>
             <el-button @click="getDataList()">查询</el-button>
+            <el-button type="success" @click="getAllDataList()">查询全部</el-button>
             <el-button
               v-if="isAuth('product:attrgroup:save')"
               type="primary"
@@ -99,6 +100,7 @@
             label="操作"
           >
             <template slot-scope="scope">
+              <el-button type="text" size="small" @click="relationHandle(scope.row.attrGroupId)">关联</el-button>
               <el-button
                 type="text"
                 size="small"

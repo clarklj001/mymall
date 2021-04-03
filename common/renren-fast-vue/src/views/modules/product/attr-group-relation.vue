@@ -215,6 +215,7 @@ export default {
           key: this.dataForm.key
         })
       }).then(({ data }) => {
+      	console.log("getDataList: ", data)
         if (data && data.code === 0) {
           this.dataList = data.data.list;
           this.totalPage = data.data.totalCount;
@@ -222,6 +223,8 @@ export default {
           this.dataList = [];
           this.totalPage = 0;
         }
+        console.log("dataList: ", this.dataList)
+        console.log("totalPage: ", this.totalPage)
         this.dataListLoading = false;
       }).catch(() => {});
     },

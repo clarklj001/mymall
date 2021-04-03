@@ -2,6 +2,7 @@ package de.killbuqs.mall.product.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
@@ -37,6 +38,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
 		return new PageUtils(page);
 	}
 
+	@Transactional
 	@Override
 	public void updateDetail(BrandEntity brand) {
 		// 保证冗余字段的数据一致

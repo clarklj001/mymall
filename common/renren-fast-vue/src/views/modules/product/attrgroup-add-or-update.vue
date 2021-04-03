@@ -87,12 +87,12 @@ export default {
     dialogClose() {
       this.catelogPath = [];
     },
-    getCategorys() {
+    getCategories() {
       this.$http({
         url: this.$http.adornUrl("/product/category/list/tree"),
         method: "get"
       }).then(({ data }) => {
-        this.categorys = data.data;
+        this.categories = data.data;
       });
     },
     init(id) {

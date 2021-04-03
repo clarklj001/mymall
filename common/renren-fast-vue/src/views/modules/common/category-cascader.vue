@@ -13,7 +13,7 @@
       clearable 
       placeholder="试试搜索：手机"
       v-model="paths"
-      :options="categorys"
+      :options="categories"
       :props="setting"
     ></el-cascader>
   </div>
@@ -40,7 +40,7 @@ export default {
         label: "name",
         children: "children"
       },
-      categorys: [],
+      categories: [],
       paths: this.catelogPath
     };
   },
@@ -56,18 +56,18 @@ export default {
   },
   //方法集合
   methods: {
-    getCategorys() {
+    getCategories() {
       this.$http({
         url: this.$http.adornUrl("/product/category/list/tree"),
         method: "get"
       }).then(({ data }) => {
-        this.categorys = data.data;
+        this.categories = data.data;
       });
     }
   },
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
-    this.getCategorys();
+    this.getCategories();
   }
 };
 </script>
