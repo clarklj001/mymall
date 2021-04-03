@@ -29,13 +29,14 @@
       </el-form-item>
       <el-form-item label="所属分类id" prop="catelogId">
         <!-- <el-input v-model="dataForm.catelogId" placeholder="所属分类id"></el-input> -->
-        <el-cascader
+        <!-- <el-cascader
           v-model="dataForm.catelogPath"
           :options="categories"
           :props="props"
           placeholder="试试搜索：手机"
           filterable
-        ></el-cascader>
+        ></el-cascader> -->
+        <category-cascader :catelogPath.sync="catelogPath"></category-cascader>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -46,6 +47,7 @@
 </template>
 
 <script>
+import CategoryCascader from "../common/category-cascader";
 export default {
   data() {
     return {
@@ -56,13 +58,13 @@ export default {
       },
       visible: false,
       categories: [],
+      catelogPath: [],
       dataForm: {
         attrGroupId: 0,
         attrGroupName: "",
         sort: "",
         descript: "",
         icon: "",
-        catelogPath: [],
         catelogId: 0,
       },
       dataRule: {
@@ -80,7 +82,19 @@ export default {
       },
     };
   },
+  components: { CategoryCascader },
   methods: {
+    dialogClose() {
+      this.catelogPath = [];
+    },
+    getCategorys() {
+      this.$http({
+        url: this.$http.adornUrl("/product/category/list/tree"),
+        method: "get"
+      }).then(({ data }) => {
+        this.categorys = data.data;
+      });
+    },
     init(id) {
       this.dataForm.attrGroupId = id || 0;
       this.visible = true;
@@ -101,24 +115,10 @@ export default {
               this.dataForm.icon = data.attrGroup.icon;
               this.dataForm.catelogId = data.attrGroup.catelogId;
               //查出catelogId的完整路径
-              this.dataForm.catelogPath = data.attrGroup.catelogPath;
+              this.catelogPath = data.attrGroup.catelogPath;
             }
           });
         }
-      });
-    },
-
-    dialogClose() {
-      this.dataForm.catelogPath = [];
-    },
-
-    getCategories() {
-      this.$http({
-        url: this.$http.adornUrl("/product/category/list/tree"),
-        method: "get",
-      }).then(({ data }) => {
-        console.log("getCategories: " + data.data);
-        this.categories = data.data;
       });
     },
     // 表单提交
@@ -138,9 +138,7 @@ export default {
               sort: this.dataForm.sort,
               descript: this.dataForm.descript,
               icon: this.dataForm.icon,
-              catelogId: this.dataForm.catelogPath[
-                this.dataForm.catelogPath.length - 1
-              ],
+              catelogId: this.catelogPath[this.catelogPath.length - 1],
             }),
           }).then(({ data }) => {
             if (data && data.code === 0) {

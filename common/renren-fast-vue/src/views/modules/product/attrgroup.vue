@@ -125,11 +125,10 @@
         >
         </el-pagination>
         <!-- 弹窗, 新增 / 修改 -->
-        <add-or-update
-          v-if="addOrUpdateVisible"
-          ref="addOrUpdate"
-          @refreshDataList="getDataList"
-        ></add-or-update>
+        <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+
+        <!-- 修改关联关系 -->
+        <relation-update v-if="relationVisible" ref="relationUpdate" @refreshData="getDataList"></relation-update>
       </div>
     </el-col>
   </el-row>
@@ -145,8 +144,10 @@
 
 import Category from "../common/category";
 import AddOrUpdate from "./attrgroup-add-or-update";
+import RelationUpdate from "./attr-group-relation";
 export default {
-  components: { Category, AddOrUpdate },
+  //import引入的组件需要注入到对象中才能使用
+  components: { Category, AddOrUpdate, RelationUpdate },
   props: {},
   data() {
     return {
@@ -161,21 +162,32 @@ export default {
       dataListLoading: false,
       dataListSelections: [],
       addOrUpdateVisible: false,
+      relationVisible: false
     };
   },
   activated() {
     this.getDataList();
   },
   methods: {
+    //处理分组与属性的关联
+    relationHandle(groupId) {
+      this.relationVisible = true;
+      this.$nextTick(() => {
+        this.$refs.relationUpdate.init(groupId);
+      });
+    },
+    //感知树节点被点击
     treeNodeClick(data, node, component) {
-        console.log("attrgroup感知到category的节点被点击", data, node, component);
         console.log("刚才被点击菜单的id：", data.catId);
         if(node.level == 3) {
             this.catId = data.catId;
             this.getDataList();
         }
     },
-
+    getAllDataList() {
+      this.catId = 0;
+      this.getDataList();
+    },
     // 获取数据列表
     getDataList() {
       this.dataListLoading = true;
@@ -196,7 +208,7 @@ export default {
           this.totalPage = 0;
         }
         this.dataListLoading = false;
-      });
+      }).catch(() => {});
     },
     // 每页数
     sizeChangeHandle(val) {
