@@ -17,5 +17,11 @@ import de.killbuqs.mall.product.entity.CategoryBrandRelationEntity;
 public interface CategoryBrandRelationService extends IService<CategoryBrandRelationEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+	void saveDetail(CategoryBrandRelationEntity categoryBrandRelation);
+
+	void updateBrand(Long brandId, String name);
+
+	void updateCategory(Long catId, String name);
 }
 
