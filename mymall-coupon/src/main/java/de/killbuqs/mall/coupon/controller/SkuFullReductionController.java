@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.killbuqs.mall.coupon.entity.SkuFullReductionEntity;
 import de.killbuqs.mall.coupon.service.SkuFullReductionService;
+import de.killbuqs.common.to.SkuReductionTo;
 import de.killbuqs.common.utils.PageUtils;
 import de.killbuqs.common.utils.R;
 
@@ -29,6 +31,14 @@ import de.killbuqs.common.utils.R;
 public class SkuFullReductionController {
     @Autowired
     private SkuFullReductionService skuFullReductionService;
+    
+    @PostMapping("/saveinfo")
+	public R saveInfo(@RequestBody SkuReductionTo skuReductionTo) {
+    	
+    	skuFullReductionService.saveSkuReduction(skuReductionTo);
+    	
+    	return R.ok();
+    }
 
     /**
      * 列表

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 import de.killbuqs.common.utils.PageUtils;
 import de.killbuqs.mall.product.entity.SpuInfoEntity;
+import de.killbuqs.mall.product.vo.SpuSaveVo;
 
 /**
  * spu信息
@@ -17,5 +18,8 @@ import de.killbuqs.mall.product.entity.SpuInfoEntity;
 public interface SpuInfoService extends IService<SpuInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+	void saveSpuInfo(SpuSaveVo vo);
+	
 }
 

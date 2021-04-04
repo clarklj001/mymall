@@ -32,7 +32,6 @@ public class AttrEntity implements Serializable {
 	 * 是否需要检索[0-不需要，1-需要]
 	 */
 	private Integer searchType;
-	
 	/**
 	 * 值类型
 	 */

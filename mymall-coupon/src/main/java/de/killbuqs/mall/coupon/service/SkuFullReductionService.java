@@ -1,6 +1,8 @@
 package de.killbuqs.mall.coupon.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import de.killbuqs.common.to.SkuReductionTo;
 import de.killbuqs.common.utils.PageUtils;
 import de.killbuqs.mall.coupon.entity.SkuFullReductionEntity;
 
@@ -16,5 +18,7 @@ import java.util.Map;
 public interface SkuFullReductionService extends IService<SkuFullReductionEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+	void saveSkuReduction(SkuReductionTo skuReductionTo);
 }
 

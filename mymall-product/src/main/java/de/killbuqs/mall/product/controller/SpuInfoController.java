@@ -14,6 +14,7 @@ import de.killbuqs.common.utils.PageUtils;
 import de.killbuqs.common.utils.R;
 import de.killbuqs.mall.product.entity.SpuInfoEntity;
 import de.killbuqs.mall.product.service.SpuInfoService;
+import de.killbuqs.mall.product.vo.SpuSaveVo;
 
 
 
@@ -52,11 +53,15 @@ public class SpuInfoController {
     }
 
     /**
-     * 保存
+     * https://easydoc.xyz/s/78237135/ZUqEdvA4/5ULdV3dd
+     * 
+     * 新增商品
      */
     @RequestMapping("/save")
-    public R save(@RequestBody SpuInfoEntity spuInfo){
-		spuInfoService.save(spuInfo);
+    public R save(@RequestBody SpuSaveVo vo){
+//		spuInfoService.save(spuInfo);
+    	
+    	spuInfoService.saveSpuInfo(vo);
 
         return R.ok();
     }
