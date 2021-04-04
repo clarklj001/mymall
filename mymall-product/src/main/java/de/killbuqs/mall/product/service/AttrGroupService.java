@@ -1,11 +1,13 @@
 package de.killbuqs.mall.product.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import de.killbuqs.common.utils.PageUtils;
 import de.killbuqs.mall.product.entity.AttrGroupEntity;
+import de.killbuqs.mall.product.vo.AttrGroupWithAttrsVo;
 
 /**
  * 属性分组
@@ -19,5 +21,7 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
 	PageUtils queryPage(Map<String, Object> params, Long categoryId);
+
+	List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId);
 }
 

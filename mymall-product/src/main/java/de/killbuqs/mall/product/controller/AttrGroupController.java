@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import de.killbuqs.mall.product.service.AttrGroupService;
 import de.killbuqs.mall.product.service.AttrService;
 import de.killbuqs.mall.product.service.CategoryService;
 import de.killbuqs.mall.product.vo.AttrGroupRelationVo;
+import de.killbuqs.mall.product.vo.AttrGroupWithAttrsVo;
 
 /**
  * 属性分组
@@ -60,6 +62,24 @@ public class AttrGroupController {
 		relationService.saveBatch(vos);
 
 		return R.ok();
+	}
+
+	/**
+	 * 
+	 * https://easydoc.xyz/s/78237135/ZUqEdvA4/6JM6txHf
+	 * 
+	 * 获取分类下所有分组&关联属性
+	 * 
+	 * @param catelogId
+	 * @return
+	 */
+	@GetMapping("/{catelogId}/withattr")
+	public R getAttrGroupWithAttrs(@PathVariable("catelogId") Long catelogId) {
+		// 查出当前分类下的所有属性分组
+		// 查出每个属性分组的所有属性
+		List<AttrGroupWithAttrsVo> vos = attrGroupService.getAttrGroupWithAttrsByCatelogId(catelogId);
+		
+		return R.ok().put("data", vos);
 	}
 
 	/**

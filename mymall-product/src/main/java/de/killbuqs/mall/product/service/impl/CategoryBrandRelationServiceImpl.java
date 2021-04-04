@@ -1,6 +1,8 @@
 package de.killbuqs.mall.product.service.impl;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import de.killbuqs.mall.product.dao.CategoryDao;
 import de.killbuqs.mall.product.entity.BrandEntity;
 import de.killbuqs.mall.product.entity.CategoryBrandRelationEntity;
 import de.killbuqs.mall.product.entity.CategoryEntity;
+import de.killbuqs.mall.product.service.BrandService;
 import de.killbuqs.mall.product.service.CategoryBrandRelationService;
 
 @Service("categoryBrandRelationService")
@@ -29,6 +32,13 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
 
 	@Autowired
 	private CategoryDao categoryDao;
+
+	@Autowired
+	private CategoryBrandRelationDao relationDao;
+	
+	@Autowired
+	private BrandService brandService;
+
 
 	@Override
 	public PageUtils queryPage(Map<String, Object> params) {
@@ -64,6 +74,20 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
 	@Override
 	public void updateCategory(Long catId, String name) {
 		this.baseMapper.updateCategory(catId, name);
+	}
+
+	@Override
+	public List<BrandEntity> getBrandsByCatId(Long catId) {
+
+		List<CategoryBrandRelationEntity> relationEntity = relationDao
+				.selectList(new QueryWrapper<CategoryBrandRelationEntity>().eq("catelog_id", catId));
+		List<BrandEntity> brandEntities = relationEntity.stream().map(item -> {
+			Long brandId = item.getBrandId();
+			BrandEntity brandEntity = brandService.getById(brandId);
+			return brandEntity;
+		}).collect(Collectors.toList());
+		
+		return brandEntities;
 	}
 
 }
