@@ -369,8 +369,8 @@ export default {
         brandId: "",
         weight: "",
         publishStatus: 0,
-        decript: [], //商品详情
-        images: [], //商品图集，最后sku也可以新增
+        decript: ['https://homepages.cae.wisc.edu/~ece533/images/airplane.png'], //商品详情
+        images: ['https://homepages.cae.wisc.edu/~ece533/images/girl.png'], //商品图集，最后sku也可以新增
         bounds: {
           //积分
           buyBounds: 0,

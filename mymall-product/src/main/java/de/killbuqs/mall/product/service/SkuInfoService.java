@@ -17,5 +17,7 @@ import de.killbuqs.mall.product.entity.SkuInfoEntity;
 public interface SkuInfoService extends IService<SkuInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+	PageUtils queryPageByCondition(Map<String, Object> params);
 }
 

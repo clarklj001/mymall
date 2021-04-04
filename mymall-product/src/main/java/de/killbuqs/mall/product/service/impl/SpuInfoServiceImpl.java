@@ -173,19 +173,49 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 				SkuReductionTo skuReductionTo = new SkuReductionTo();
 				BeanUtils.copyProperties(item, skuReductionTo);
 				skuReductionTo.setSkuId(skuId);
-				
+
 				// 满减信息为0的时候，数据不需要提交数据库
-				if(skuReductionTo.getFullCount() > 0 || skuReductionTo.getFullPrice().compareTo(new BigDecimal(0)) == 1) {
+				if (skuReductionTo.getFullCount() > 0
+						|| skuReductionTo.getFullPrice().compareTo(new BigDecimal(0)) == 1) {
 					R saveSkuReduction = couponFeignService.saveSkuReduction(skuReductionTo);
 					if (saveSkuReduction.getCode() == 0) {
-							log.error("远程保存sku优惠信息失败");
+						log.error("远程保存sku优惠信息失败");
 					}
 				}
-				
+
 			});
 
 		}
 
+	}
+
+	@Override
+	public PageUtils queryPageByCondition(Map<String, Object> params) {
+
+		QueryWrapper<SpuInfoEntity> queryWrapper = new QueryWrapper<SpuInfoEntity>();
+
+		String key = (String) params.get("key");
+		if (!StringUtils.isEmpty(key)) {
+			queryWrapper.and(wrapper -> {
+				wrapper.eq("id", key).or().like("spu_name", key);
+			});
+		}
+		String status = (String) params.get("status");
+		if (!StringUtils.isEmpty(status)) {
+			queryWrapper.eq("publish_status", status);
+		}
+		String brandId = (String) params.get("brandId");
+		if (!StringUtils.isEmpty(brandId) && !"0".equalsIgnoreCase(brandId)) {
+			queryWrapper.eq("brand_id", brandId);
+		}
+		String catelogId = (String) params.get("catelogId");
+		if (!StringUtils.isEmpty(catelogId) && !"0".equalsIgnoreCase(catelogId)) {
+			queryWrapper.eq("catalog_id", catelogId);
+		}
+
+		IPage<SpuInfoEntity> page = this.page(new Query<SpuInfoEntity>().getPage(params), queryWrapper);
+
+		return new PageUtils(page);
 	}
 
 }
