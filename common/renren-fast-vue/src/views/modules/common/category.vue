@@ -23,6 +23,7 @@ export default {
         children: "children",
         label: "name",
       },
+      PubSub
     };
   },
   computed: {},
