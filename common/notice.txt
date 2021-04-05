@@ -1,0 +1,12 @@
+设置服务器启动参数
+VM options: -Xmx100m
+
+开发环境可以设置数据库隔离级别为read uncommitted
+SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+
+解决规格维护tab 没有的问题
+
+在前端代码 src/router/index.js 文件中，定义mainRouter时在children中加入一行路由 (39)
+{ path: '/product-attrupdate', component: _import('modules/product/attrupdate'), name: 'attr-update', meta: { title: '规格维护', isTab: true } }
+这样做可以避免左侧菜单栏出现一个多余的菜单
+原理是前端的路由是由vue-router负责的，在路由初始化时会从数据库查询定义的菜单并注册成路由，如果直接在前端注册成路由就不用先定义成菜单了
