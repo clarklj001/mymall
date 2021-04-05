@@ -11,7 +11,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.optimize.JsqlParser
 @Configuration
 @EnableTransactionManagement
 @MapperScan("de.killbuqs.mall.product.dao")
-public class MyBatisConfig {
+public class ProductMyBatisConfig {
 
 	// 引入分页插件
 	@Bean

@@ -1,13 +1,13 @@
 package de.killbuqs.mall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
-
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import de.killbuqs.common.utils.PageUtils;
 import de.killbuqs.common.utils.R;
 import de.killbuqs.mall.product.entity.AttrEntity;
+import de.killbuqs.mall.product.entity.ProductAttrValueEntity;
 import de.killbuqs.mall.product.service.AttrService;
+import de.killbuqs.mall.product.service.ProductAttrValueService;
 import de.killbuqs.mall.product.vo.AttrRespVo;
 import de.killbuqs.mall.product.vo.AttrVo;
 
@@ -33,6 +35,26 @@ public class AttrController {
 
 	@Autowired
 	private AttrService attrService;
+
+	@Autowired
+	private ProductAttrValueService productAttrValueService;
+
+	/**
+	 * https://easydoc.xyz/s/78237135/ZUqEdvA4/GhhJhkg7
+	 * 
+	 * 获取spu规格
+	 * 
+	 * @param params
+	 * @param catelogId
+	 * @return
+	 */
+	@GetMapping("/base/listforspu/{spuId}")
+	public R baseAttrListForSpu(@PathVariable("spuId") Long spuId) {
+
+		List<ProductAttrValueEntity> entities = productAttrValueService.baseAttrListForSpu(spuId);
+
+		return R.ok().put("data", entities);
+	}
 
 	/**
 	 * https://easydoc.xyz/s/78237135/ZUqEdvA4/Ld1Vfkcd
@@ -128,6 +150,21 @@ public class AttrController {
 	@RequestMapping("/update")
 	public R update(@RequestBody AttrVo attr) {
 		attrService.updateAttr(attr);
+
+		return R.ok();
+	}
+
+	/**
+	 * https://easydoc.xyz/s/78237135/ZUqEdvA4/GhnJ0L85
+	 * 
+	 * 修改商品规格
+	 * 
+	 * @param attr
+	 * @return
+	 */
+	@PostMapping("/update/{spuId}")
+	public R updateSpuAttr(@RequestBody List<ProductAttrValueEntity> entities, @PathVariable("spuId") Long spuId) {
+		productAttrValueService.updateSpuAttr(spuId, entities);
 
 		return R.ok();
 	}
