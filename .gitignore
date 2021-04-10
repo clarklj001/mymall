@@ -29,6 +29,8 @@ hs_err_pid*
 
 **/target/
 
+mymall-product/
+
 **/mvnw
 **/mvnw.cmd
 
@@ -37,10 +39,10 @@ hs_err_pid*
 .idea
 
 common/mysql/data/
-# common/renren-fast-vue/
+common/vue-demo/
 
 common/nacos/
 
-common/vue-demo/
+
 
 
