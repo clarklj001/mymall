@@ -7,7 +7,7 @@ PROJECT_COMMON_PATH=~/projects/tutorials/mymall/common
 ## Create and run a mysql container
 
 ~~~
-sudo docker run -p 3306:3306 --name mysql \
+sudo docker run -p 3306:3306 --name mysql --network mymall \
 -v $PROJECT_COMMON_PATH/mysql/log:/var/log/mysql \
 -v $PROJECT_COMMON_PATH/mysql/data:/var/lib/mysql \
 -v $PROJECT_COMMON_PATH/mysql/conf:/etc/mysql \
