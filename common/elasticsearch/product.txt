@@ -1,6 +1,3 @@
-## Kibana 创建 sku 索引
-## 此索引后来会出现问题，下面有修改。
-
 PUT product
 {
   "mappings": {
