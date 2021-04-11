@@ -10,6 +10,9 @@ package de.killbuqs.common.utils;
 
 import org.apache.http.HttpStatus;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +27,18 @@ public class R extends HashMap<String, Object> {
 	public R() {
 		put("code", 0);
 		put("msg", "success");
+	}
+
+	public R setData(Object data) {
+		put("data", data);
+		return this;
+	}
+
+	public <T> T getData(TypeReference<T> typeReference) {
+		Object object = get("data");
+		String jsonString = JSON.toJSONString(object);
+		T t =JSON.parseObject(jsonString, typeReference);
+		return t;
 	}
 
 	public static R error() {
