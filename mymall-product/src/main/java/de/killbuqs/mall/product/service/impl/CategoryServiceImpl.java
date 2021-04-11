@@ -20,13 +20,15 @@ import de.killbuqs.mall.product.dao.CategoryDao;
 import de.killbuqs.mall.product.entity.CategoryEntity;
 import de.killbuqs.mall.product.service.CategoryBrandRelationService;
 import de.killbuqs.mall.product.service.CategoryService;
+import de.killbuqs.mall.product.vo.ui.Catalog2Vo;
+import de.killbuqs.mall.product.vo.ui.Catalog2Vo.Catalog3Vo;
 
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
-	
+
 	@Autowired
 	private CategoryBrandRelationService categoryBrandRelationService;
-	
+
 	@Override
 	public PageUtils queryPage(Map<String, Object> params) {
 		IPage<CategoryEntity> page = this.page(new Query<CategoryEntity>().getPage(params),
@@ -63,17 +65,17 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 						- (menu2.getSort() == null ? 0 : menu2.getSort())) //
 				.collect(Collectors.toList());
 	}
-	
+
 	@Override
 	public Long[] findCatelogPath(Long catelogId) {
 		List<Long> paths = new ArrayList<>();
-		
+
 		CategoryEntity byId = this.getById(catelogId);
 		paths.add(catelogId);
-		
-		for(int i=0; i<3; i++) {
+
+		for (int i = 0; i < 3; i++) {
 			Long parentCid = byId.getParentCid();
-			if(parentCid != 0) {
+			if (parentCid != 0) {
 				byId = this.getById(parentCid);
 				paths.add(parentCid);
 			} else {
@@ -83,7 +85,6 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 		Collections.reverse(paths);
 		return (Long[]) paths.toArray(new Long[paths.size()]);
 	}
-	
 
 	private List<CategoryEntity> getChildren(CategoryEntity currentEntity, List<CategoryEntity> all) {
 		return all.stream() //
@@ -96,9 +97,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
 	@Override
 	public void removeMenuByIds(List<Long> asList) {
-		//TODO 检查当前删除的菜单是否被别的地方引用
+		// TODO 检查当前删除的菜单是否被别的地方引用
 		baseMapper.deleteBatchIds(asList);
-		
+
 	}
 
 	@Transactional
@@ -106,6 +107,49 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 	public void updateCascade(CategoryEntity category) {
 		this.updateById(category);
 		categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
+	}
+
+	@Override
+	public List<CategoryEntity> getLevel1Categories() {
+		return this.baseMapper.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", 0));
+	}
+
+	@Override
+	public Map<String, List<Catalog2Vo>> getCatalogJson() {
+
+		// 查出所有1级分类
+		List<CategoryEntity> level1Categories = getLevel1Categories();
+
+		Map<String, List<Catalog2Vo>> parentCid = level1Categories.stream()
+				.collect(Collectors.toMap(k -> k.getCatId().toString(), v -> {
+					// 查询每一个一级分类的二级分类
+					List<CategoryEntity> categoryEntities = baseMapper
+							.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", v.getCatId()));
+					List<Catalog2Vo> catalog2Vos = null;
+					if (categoryEntities != null) {
+						catalog2Vos = categoryEntities.stream().map(level2Catalog -> {
+							Catalog2Vo catalog2Vo = new Catalog2Vo(v.getCatId().toString(), null,
+									level2Catalog.getCatId().toString(), level2Catalog.getName());
+							// 找当前二级分类的三级分类
+							List<CategoryEntity> level3Catalogs = baseMapper
+									.selectList(new QueryWrapper<CategoryEntity>().eq("parent_cid", level2Catalog.getCatId()));
+							if (level3Catalogs != null) {
+								List<Catalog3Vo> level3CatalogVos = level3Catalogs.stream().map(level3Catalog -> {
+									Catalog3Vo catalog3Vo = new Catalog2Vo.Catalog3Vo(level2Catalog.getCatId().toString(),
+											level3Catalog.getCatId().toString(), level3Catalog.getName());
+									return catalog3Vo;
+								}).collect(Collectors.toList());
+								catalog2Vo.setCatalog3List(level3CatalogVos);
+							}
+
+							return catalog2Vo;
+						}).collect(Collectors.toList());
+					}
+
+					return catalog2Vos;
+				}));
+
+		return parentCid;
 	}
 
 }

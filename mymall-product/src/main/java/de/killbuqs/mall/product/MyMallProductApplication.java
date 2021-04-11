@@ -38,6 +38,13 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  *  
  *  统一的异常处理
  *  @ControllerAdvice
+ *  
+ *  模板引擎
+ *  	1）thymeleaf-starter 关闭缓存
+ *  	2）静态资源都放在static文件夹下就可以按照路径直接访问
+ *  	3）页面放在templates下，直接访问
+ *  		SpringBoot 默认找 index.html  WebMvcAutoConfiguration
+ *  	4) 开发环境 设置application.properties   spring.thymeleaf.cache: false 添加 devtools依赖
  * 
  * @author jlong
  *

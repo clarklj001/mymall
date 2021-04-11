@@ -1,4 +1,4 @@
-package de.killbuqs.mall.product.controller;
+package de.killbuqs.mall.product.app;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -12,30 +12,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.killbuqs.common.utils.PageUtils;
 import de.killbuqs.common.utils.R;
-import de.killbuqs.mall.product.entity.SpuCommentEntity;
-import de.killbuqs.mall.product.service.SpuCommentService;
+import de.killbuqs.mall.product.entity.SpuInfoDescEntity;
+import de.killbuqs.mall.product.service.SpuInfoDescService;
 
 
 
 /**
- * 商品评价
+ * spu信息介绍
  *
  * @author jlong
  * @email jie.long@killbuqs.de
  * @date 2021-03-14 21:40:00
  */
 @RestController
-@RequestMapping("product/spucomment")
-public class SpuCommentController {
+@RequestMapping("product/spuinfodesc")
+public class SpuInfoDescController {
     @Autowired
-    private SpuCommentService spuCommentService;
+    private SpuInfoDescService spuInfoDescService;
 
     /**
      * 列表
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = spuCommentService.queryPage(params);
+        PageUtils page = spuInfoDescService.queryPage(params);
 
         return R.ok().put("page", page);
     }
@@ -44,19 +44,19 @@ public class SpuCommentController {
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
-    public R info(@PathVariable("id") Long id){
-		SpuCommentEntity spuComment = spuCommentService.getById(id);
+    @RequestMapping("/info/{spuId}")
+    public R info(@PathVariable("spuId") Long spuId){
+		SpuInfoDescEntity spuInfoDesc = spuInfoDescService.getById(spuId);
 
-        return R.ok().put("spuComment", spuComment);
+        return R.ok().put("spuInfoDesc", spuInfoDesc);
     }
 
     /**
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody SpuCommentEntity spuComment){
-		spuCommentService.save(spuComment);
+    public R save(@RequestBody SpuInfoDescEntity spuInfoDesc){
+		spuInfoDescService.save(spuInfoDesc);
 
         return R.ok();
     }
@@ -65,8 +65,8 @@ public class SpuCommentController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody SpuCommentEntity spuComment){
-		spuCommentService.updateById(spuComment);
+    public R update(@RequestBody SpuInfoDescEntity spuInfoDesc){
+		spuInfoDescService.updateById(spuInfoDesc);
 
         return R.ok();
     }
@@ -75,8 +75,8 @@ public class SpuCommentController {
      * 删除
      */
     @RequestMapping("/delete")
-    public R delete(@RequestBody Long[] ids){
-		spuCommentService.removeByIds(Arrays.asList(ids));
+    public R delete(@RequestBody Long[] spuIds){
+		spuInfoDescService.removeByIds(Arrays.asList(spuIds));
 
         return R.ok();
     }

@@ -1,4 +1,4 @@
-package de.killbuqs.mall.product.controller;
+package de.killbuqs.mall.product.app;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -12,30 +12,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.killbuqs.common.utils.PageUtils;
 import de.killbuqs.common.utils.R;
-import de.killbuqs.mall.product.entity.SkuSaleAttrValueEntity;
-import de.killbuqs.mall.product.service.SkuSaleAttrValueService;
+import de.killbuqs.mall.product.entity.SkuInfoEntity;
+import de.killbuqs.mall.product.service.SkuInfoService;
 
 
 
 /**
- * sku销售属性&值
+ * sku信息
  *
  * @author jlong
  * @email jie.long@killbuqs.de
  * @date 2021-03-14 21:40:00
  */
 @RestController
-@RequestMapping("product/skusaleattrvalue")
-public class SkuSaleAttrValueController {
+@RequestMapping("product/skuinfo")
+public class SkuInfoController {
     @Autowired
-    private SkuSaleAttrValueService skuSaleAttrValueService;
+    private SkuInfoService skuInfoService;
 
     /**
      * 列表
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = skuSaleAttrValueService.queryPage(params);
+        PageUtils page = skuInfoService.queryPageByCondition(params);
 
         return R.ok().put("page", page);
     }
@@ -44,19 +44,19 @@ public class SkuSaleAttrValueController {
     /**
      * 信息
      */
-    @RequestMapping("/info/{id}")
-    public R info(@PathVariable("id") Long id){
-		SkuSaleAttrValueEntity skuSaleAttrValue = skuSaleAttrValueService.getById(id);
+    @RequestMapping("/info/{skuId}")
+    public R info(@PathVariable("skuId") Long skuId){
+		SkuInfoEntity skuInfo = skuInfoService.getById(skuId);
 
-        return R.ok().put("skuSaleAttrValue", skuSaleAttrValue);
+        return R.ok().put("skuInfo", skuInfo);
     }
 
     /**
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody SkuSaleAttrValueEntity skuSaleAttrValue){
-		skuSaleAttrValueService.save(skuSaleAttrValue);
+    public R save(@RequestBody SkuInfoEntity skuInfo){
+		skuInfoService.save(skuInfo);
 
         return R.ok();
     }
@@ -65,8 +65,8 @@ public class SkuSaleAttrValueController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody SkuSaleAttrValueEntity skuSaleAttrValue){
-		skuSaleAttrValueService.updateById(skuSaleAttrValue);
+    public R update(@RequestBody SkuInfoEntity skuInfo){
+		skuInfoService.updateById(skuInfo);
 
         return R.ok();
     }
@@ -75,8 +75,8 @@ public class SkuSaleAttrValueController {
      * 删除
      */
     @RequestMapping("/delete")
-    public R delete(@RequestBody Long[] ids){
-		skuSaleAttrValueService.removeByIds(Arrays.asList(ids));
+    public R delete(@RequestBody Long[] skuIds){
+		skuInfoService.removeByIds(Arrays.asList(skuIds));
 
         return R.ok();
     }

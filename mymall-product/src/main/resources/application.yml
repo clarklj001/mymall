@@ -15,6 +15,9 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Europe/Berlin
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
       
 #    alicloud:
 #      access-key: xxxxxxxxxxx
@@ -35,3 +38,6 @@ server:
 logging:
   level:
     '[de.killbuqs.mall]': debug
+    
+    
+    

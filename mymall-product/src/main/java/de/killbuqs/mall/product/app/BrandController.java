@@ -1,4 +1,4 @@
-package de.killbuqs.mall.product.controller;
+package de.killbuqs.mall.product.app;
 
 import java.util.Arrays;
 import java.util.HashMap;

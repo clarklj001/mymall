@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 import de.killbuqs.common.utils.PageUtils;
 import de.killbuqs.mall.product.entity.CategoryEntity;
+import de.killbuqs.mall.product.vo.ui.Catalog2Vo;
 
 /**
  * 商品三级分类
@@ -32,5 +33,9 @@ public interface CategoryService extends IService<CategoryEntity> {
 	Long[] findCatelogPath(Long catelogId);
 
 	void updateCascade(CategoryEntity category);
+
+	List<CategoryEntity> getLevel1Categories();
+
+	Map<String, List<Catalog2Vo>> getCatalogJson();
 }
 

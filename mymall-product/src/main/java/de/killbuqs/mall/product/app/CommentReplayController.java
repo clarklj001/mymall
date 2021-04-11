@@ -1,4 +1,4 @@
-package de.killbuqs.mall.product.controller;
+package de.killbuqs.mall.product.app;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -12,30 +12,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.killbuqs.common.utils.PageUtils;
 import de.killbuqs.common.utils.R;
-import de.killbuqs.mall.product.entity.AttrAttrgroupRelationEntity;
-import de.killbuqs.mall.product.service.AttrAttrgroupRelationService;
+import de.killbuqs.mall.product.entity.CommentReplayEntity;
+import de.killbuqs.mall.product.service.CommentReplayService;
 
 
 
 /**
- * 属性&属性分组关联
+ * 商品评价回复关系
  *
  * @author jlong
  * @email jie.long@killbuqs.de
  * @date 2021-03-14 21:40:00
  */
 @RestController
-@RequestMapping("product/attrattrgrouprelation")
-public class AttrAttrgroupRelationController {
+@RequestMapping("product/commentreplay")
+public class CommentReplayController {
     @Autowired
-    private AttrAttrgroupRelationService attrAttrgroupRelationService;
+    private CommentReplayService commentReplayService;
 
     /**
      * 列表
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = attrAttrgroupRelationService.queryPage(params);
+        PageUtils page = commentReplayService.queryPage(params);
 
         return R.ok().put("page", page);
     }
@@ -46,17 +46,17 @@ public class AttrAttrgroupRelationController {
      */
     @RequestMapping("/info/{id}")
     public R info(@PathVariable("id") Long id){
-		AttrAttrgroupRelationEntity attrAttrgroupRelation = attrAttrgroupRelationService.getById(id);
+		CommentReplayEntity commentReplay = commentReplayService.getById(id);
 
-        return R.ok().put("attrAttrgroupRelation", attrAttrgroupRelation);
+        return R.ok().put("commentReplay", commentReplay);
     }
 
     /**
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody AttrAttrgroupRelationEntity attrAttrgroupRelation){
-		attrAttrgroupRelationService.save(attrAttrgroupRelation);
+    public R save(@RequestBody CommentReplayEntity commentReplay){
+		commentReplayService.save(commentReplay);
 
         return R.ok();
     }
@@ -65,8 +65,8 @@ public class AttrAttrgroupRelationController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody AttrAttrgroupRelationEntity attrAttrgroupRelation){
-		attrAttrgroupRelationService.updateById(attrAttrgroupRelation);
+    public R update(@RequestBody CommentReplayEntity commentReplay){
+		commentReplayService.updateById(commentReplay);
 
         return R.ok();
     }
@@ -76,7 +76,7 @@ public class AttrAttrgroupRelationController {
      */
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] ids){
-		attrAttrgroupRelationService.removeByIds(Arrays.asList(ids));
+		commentReplayService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
     }
