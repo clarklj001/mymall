@@ -157,5 +157,10 @@ public class MyMallSearchApplicationTest {
 		private String gender;
 		private Integer age;
 	}
+	
+	/**
+	 * 
+	 *
+	 */
 
 }

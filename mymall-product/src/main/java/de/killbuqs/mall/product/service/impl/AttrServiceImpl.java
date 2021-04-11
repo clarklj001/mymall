@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -248,5 +249,12 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 		IPage<AttrEntity> page = this.page(new Query<AttrEntity>().getPage(params), queryWrapper);
 
 		return new PageUtils(page);
+	}
+
+	@Override
+	public List<Long> selectSearchAttrIds(List<Long> attrIds) {
+		// select attr_id from pms_attr where attr_id in () and search_type = 1
+		List<Long> attrs = this.baseMapper.selectSearchAttrIds(attrIds);
+		return attrs;
 	}
 }

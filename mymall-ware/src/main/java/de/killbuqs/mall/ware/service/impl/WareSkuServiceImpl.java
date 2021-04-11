@@ -2,6 +2,7 @@ package de.killbuqs.mall.ware.service.impl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import de.killbuqs.common.to.SkuHasStockVo;
 import de.killbuqs.common.utils.PageUtils;
 import de.killbuqs.common.utils.Query;
 import de.killbuqs.common.utils.R;
@@ -79,6 +81,22 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
 
 		}
 
+	}
+
+	@Override
+	public List<SkuHasStockVo> getSkusHasStock(List<Long> skuIds) {
+		
+		// select sum(stock - stock_locked) from wms_ware_sku where sku_id = 1
+		
+		List<SkuHasStockVo> collect = skuIds.stream().map(skuId -> {
+			SkuHasStockVo vo = new SkuHasStockVo();
+			Long count = wareSkuDao.getSkuStock(skuId);
+			vo.setSkuId(skuId);
+			vo.setHasStock(count == null ? false : count > 0);
+			return vo;
+		}).collect(Collectors.toList());
+		
+		return collect;
 	}
 
 }
