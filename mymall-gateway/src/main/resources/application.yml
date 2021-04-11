@@ -47,6 +47,11 @@ spring:
         filters:
         - RewritePath=/api/(?<segment>/?.*), /renren-fast/$\{segment}
 
+      - id: mymall_host_route
+        uri: lb://mymall-product
+        predicates:
+        -  Host=**.mymall.com
+
           
 server:
   port: 8888
