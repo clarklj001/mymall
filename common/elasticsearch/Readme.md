@@ -19,7 +19,7 @@ echo "http.host: 0.0.0.0" >> config/elasticsearch.yml
 
 sudo docker run -p 9200:9200 -p 9300:9300 --network mymall --name elasticsearch \
 -e "discovery.type=single-node" \
--e ES_JAVA_OPTS="-Xms64m -Xmx128m" \
+-e ES_JAVA_OPTS="-Xms256m -Xmx256m" \
 -v $PROJECT_COMMON_PATH/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
 -v $PROJECT_COMMON_PATH/elasticsearch/data:/usr/share/elasticsearch/data \
 -v $PROJECT_COMMON_PATH/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
