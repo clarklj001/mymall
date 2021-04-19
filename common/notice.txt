@@ -10,3 +10,8 @@ SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 { path: '/product-attrupdate', component: _import('modules/product/attrupdate'), name: 'attr-update', meta: { title: '规格维护', isTab: true } }
 这样做可以避免左侧菜单栏出现一个多余的菜单
 原理是前端的路由是由vue-router负责的，在路由初始化时会从数据库查询定义的菜单并注册成路由，如果直接在前端注册成路由就不用先定义成菜单了
+
+
+微服务多端口启动:
+
+Program arguments:  --server.port=10001
