@@ -2,11 +2,15 @@ package de.killbuqs.mall.product;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +34,12 @@ public class MyMallProductApplicationTest {
 	@Autowired
 	private CategoryService categoryService;
 	
+	@Autowired
+	private StringRedisTemplate stringRedisTemplate;
+	
+	@Autowired
+	private RedissonClient redissonClient;
+	
 	@Test
 	public void contextLoads() {
 		BrandEntity entity = new BrandEntity();
@@ -49,6 +59,21 @@ public class MyMallProductApplicationTest {
 		
 		log.info("Path: {}", Arrays.asList(catelogPath));
 		
-		
 	}
+	
+	@Test
+	public void testRedis() {
+		ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
+		opsForValue.set("hello", "world_"+UUID.randomUUID().toString());
+		
+		String value = opsForValue.get("hello");
+		
+		System.out.println(value);
+	}
+	
+	@Test
+	public void testRedisson() {
+		System.out.println(redissonClient);
+	}
+	
 }

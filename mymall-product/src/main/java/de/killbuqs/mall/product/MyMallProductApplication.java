@@ -46,9 +46,49 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  *  		SpringBoot 默认找 index.html  WebMvcAutoConfiguration
  *  	4) 开发环境 设置application.properties   spring.thymeleaf.cache: false 添加 devtools依赖
  * 
+ * 整合redis
+ * 	1）spring-boot-starter-data-redis
+ * 	2）配置redis host, port
+ *  3）使用 StringRedisTemplate 进行操作
+ *  
+ * 整合redisson作为分布式锁等功能框架
+ * 	1） 引入依赖 https://github.com/redisson/redisson
+ * 	2） 配置redisson 
+ * 
+ * 整合SpringCache简化缓存开发
+ * 	1） spring-boot-starter-cache, spring-boot-starter-data-redis
+ * 	2) 配置
+ * 		2.1）缓存自动配置 CacheAutoConfiguration, RedisCacheConfiguration @EnableCaching
+ * 		2.2) 配置文件
+ * 	3）测试 
+ * 		@Cacheable: Triggers cache population.
+ *		@CacheEvict: Triggers cache eviction. 修改数据后缓存清除
+ *		@CachePut: Updates the cache without interfering with the method execution. 修改数据后放入缓存 （双写模式）
+ *		@Caching: Regroups multiple cache operations to be applied on a method.
+ *		@CacheConfig: Shares some common cache-related settings at class-level.
+ *	4) 原理
+ *		CacheAutoConfiguration 导入了 RedisCacheConfiguration -> 自动配置了缓存管理器 RedisCacheManager
+ *		-> 初始化缓存 -> 如果redisCacheConfiguration有就用以有的，没有的话用默认的（cacheProperties）
+ *		-> 想改缓存的配置，只需要给容器中放一个RedisCacheConfiguration即可，
+ *		-> 就会应用到当前RedisCacheManager管理的所有缓存分区中
+ * 
+ * 	Spring-Cache的不足
+ * 	1） 读模式
+ * 		// 处理缓存穿透: 空结果缓存 spring.cache.redis.cache-null-values=true
+ *		// 处理缓存击穿: 加锁 @Cachable sync=true 加了一个本地锁
+ *		// 处理缓存雪崩： 设置加随机值的过期时间 发生在极端情况下，十几万key同时失效，十几万访问同时发生
+ *	2） 写模式(缓存与数据库一致)
+ *		1)读写加锁 应用于读多写少
+ *		2）引入Canal，感知到MySQL的更新去更新数据库
+ *		3）读多写多，直接去数据库查询
+ *
+ *	总结 常规数据（读多写少，即时性，一致性要求不高的数据），完全可以使用Spring-Cache
+ *	特殊数据：必须特殊设计
+ *
  * @author jlong
  *
  */
+
 @MapperScan("de.killbuqs.mall.product.dao")
 @EnableDiscoveryClient
 @SpringBootApplication
