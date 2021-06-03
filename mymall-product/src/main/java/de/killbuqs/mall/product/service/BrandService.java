@@ -1,5 +1,6 @@
 package de.killbuqs.mall.product.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -19,5 +20,7 @@ public interface BrandService extends IService<BrandEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
 	void updateDetail(BrandEntity brand);
+
+	List<BrandEntity> getBrandsByIds(List<Long> brandIds);
 }
 

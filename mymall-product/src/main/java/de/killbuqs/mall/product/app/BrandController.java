@@ -1,14 +1,12 @@
 package de.killbuqs.mall.product.app;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,6 +52,14 @@ public class BrandController {
 		BrandEntity brand = brandService.getById(brandId);
 
 		return R.ok().put("brand", brand);
+	}
+	
+	@GetMapping("/infos")
+	public R info(@RequestParam("brandIds") List<Long> brandIds) {
+		
+		List<BrandEntity> entities = brandService.getBrandsByIds(brandIds);
+		
+		return R.ok().put("brands", entities);
 	}
 
 	/**

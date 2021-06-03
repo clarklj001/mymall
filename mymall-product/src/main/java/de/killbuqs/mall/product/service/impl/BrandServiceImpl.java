@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -49,6 +50,11 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
 			//TODO 更新其他关联表
 		}
 		
+	}
+
+	@Override
+	public List<BrandEntity> getBrandsByIds(List<Long> brandIds) {
+		return baseMapper.selectList(new QueryWrapper<BrandEntity>().in("brand_id", brandIds));
 	}
 
 }

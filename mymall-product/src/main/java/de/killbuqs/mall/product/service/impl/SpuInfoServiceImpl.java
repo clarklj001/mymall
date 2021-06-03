@@ -188,9 +188,11 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 				skuImagesService.saveBatch(imagesEntities);
 
 				List<Attr> attr = item.getAttr();
+				Long finalSkuId = skuId;
 				List<SkuSaleAttrValueEntity> skuSaleAttrValueEntities = attr.stream().map(attrVo -> {
 					SkuSaleAttrValueEntity skuSaleAttrValueEntity = new SkuSaleAttrValueEntity();
 					BeanUtils.copyProperties(attrVo, skuSaleAttrValueEntity);
+					skuSaleAttrValueEntity.setSkuId(finalSkuId);
 					return skuSaleAttrValueEntity;
 				}).collect(Collectors.toList());
 				// 6.3.保存sku的销售属性信息 pms_sku_sale_attr_value
@@ -279,7 +281,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
 			TypeReference<List<SkuHasStockVo>> typeReference = new TypeReference<List<SkuHasStockVo>>() {
 			};
-			stockMap = hasStock.getData(typeReference).stream()
+			stockMap = hasStock.getData("data", typeReference).stream()
 					.collect(Collectors.toMap(SkuHasStockVo::getSkuId, SkuHasStockVo::getHasStock));
 
 		} catch (Exception e) {

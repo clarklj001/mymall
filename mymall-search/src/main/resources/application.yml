@@ -7,5 +7,9 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+
 server:
   port: 12000   
