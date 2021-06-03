@@ -76,11 +76,11 @@ public class SkuEsModel {
 	private String skuTitle;
 	private BigDecimal skuPrice;
 	private String skuImg;
-	private Long ssaleCount;
+	private Long saleCount;
 	private Boolean hasStock;
 	private Long hotScore;
-	private Long sbrandId;
-	private Long scatalogId;
+	private Long brandId;
+	private Long catalogId;
 	private String catalogName;
 	private String brandName;
 	private String brandImg;
