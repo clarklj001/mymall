@@ -8,7 +8,9 @@
 	<entry key="ext_stopwords"></entry>
 	<!--用户可以在这里配置远程扩展字典 -->
 	<!-- <entry key="remote_ext_dict">words_location</entry> -->
-	<entry key="remote_ext_dict">http://nginx/es/fenci.txt</entry>
+	<!-- <entry key="remote_ext_dict">http://mymall.com/es/fenci.txt</entry> -->
+	<entry key="remote_ext_dict">http://172.30.0.2/es/fenci.txt</entry>
+	172.30.0.1
 	<!--用户可以在这里配置远程扩展停止词字典-->
 	<!-- <entry key="remote_ext_stopwords">words_location</entry> -->
 </properties>

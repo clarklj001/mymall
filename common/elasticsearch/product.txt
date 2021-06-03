@@ -1,3 +1,7 @@
+## 删除索引
+DELETE /product
+
+## 添加索引模型
 PUT product
 {
   "mappings": {
@@ -13,7 +17,7 @@ PUT product
         "analyzer": "ik_smart"
       },
       "skuPrice": {
-        "type": "keyword"
+        "type": "double"
       },
       "skuImg": {
         "type": "keyword",
@@ -43,12 +47,12 @@ PUT product
       "brandName": {
         "type": "keyword",
         "index": false,
-        "doc_values": false
+        "doc_values": true
       },
       "brandImg": {
         "type": "keyword",
         "index": false,
-        "doc_values": false
+        "doc_values": true
       },
       "attrs": {
         "type": "nested",
@@ -59,7 +63,7 @@ PUT product
           "attrName": {
             "type": "keyword",
             "index": false,
-            "doc_values": false
+            "doc_values": true
           },
           "attrValue": {
             "type": "keyword"
@@ -76,3 +80,5 @@ PUT product
   "shards_acknowledged" : true,
   "index" : "product"
 }
+
+## 进行数据索引
